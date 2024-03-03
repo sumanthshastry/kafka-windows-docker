@@ -11,8 +11,8 @@ services:
         ZOO_PORT: 2181
         ZOO_SERVERS: server.1=zookeep1:2888:3888 server.2=zookeep2:2888:3888 server.3=zookeep3:2888:3888
     volumes:
-      - ./zk-multiple-kafka-multiple/zookeep1/data:/data
-      - ./zk-multiple-kafka-multiple/zookeep1/datalog:/datalog
+      - ./kafka-windows-docker-data/zookeep1/data:/data
+      - ./kafka-windows-docker-data/zookeep1/datalog:/datalog
 
   zookeep2:
     image: zookeeper:3.4.14
@@ -24,8 +24,8 @@ services:
         ZOO_PORT: 2182
         ZOO_SERVERS: server.1=zookeep1:2888:3888 server.2=zookeep2:2888:3888 server.3=zookeep3:2888:3888
     volumes:
-      - ./zk-multiple-kafka-multiple/zookeep2/data:/data
-      - ./zk-multiple-kafka-multiple/zookeep2/datalog:/datalog
+      - ./kafka-windows-docker-data/zookeep2/data:/data
+      - ./kafka-windows-docker-data/zookeep2/datalog:/datalog
 
   zookeep3:
     image: zookeeper:3.4.14
@@ -37,12 +37,12 @@ services:
         ZOO_PORT: 2183
         ZOO_SERVERS: server.1=zookeep1:2888:3888 server.2=zookeep2:2888:3888 server.3=zookeep3:2888:3888
     volumes:
-      - ./zk-multiple-kafka-multiple/zookeep3/data:/data
-      - ./zk-multiple-kafka-multiple/zookeep3/datalog:/datalog
+      - ./kafka-windows-docker-data/zookeep3/data:/data
+      - ./kafka-windows-docker-data/zookeep3/datalog:/datalog
 
 
   kafka1:
-    image: confluentinc/cp-kafka:5.2.1
+    image: confluentinc/cp-kafka:7.5.0
     hostname: kafka1
     ports:
       - "9092:9092"
@@ -54,14 +54,14 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
-      - ./zk-multiple-kafka-multiple/kafka1/data:/var/lib/kafka/data
+      - ./kafka-windows-docker-data/kafka1/data:/var/lib/kafka/data
     depends_on:
       - zookeep1
       - zookeep2
       - zookeep3
 
   kafka2:
-    image: confluentinc/cp-kafka:5.2.1
+    image: confluentinc/cp-kafka:7.5.0
     hostname: kafka2
     ports:
       - "9093:9093"
@@ -73,14 +73,14 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
-      - ./zk-multiple-kafka-multiple/kafka2/data:/var/lib/kafka/data
+      - ./kafka-windows-docker-data/kafka2/data:/var/lib/kafka/data
     depends_on:
       - zookeep1
       - zookeep2
       - zookeep3
 
   kafka3:
-    image: confluentinc/cp-kafka:5.2.1
+    image: confluentinc/cp-kafka:7.5.0
     hostname: kafka3
     ports:
       - "9094:9094"
@@ -92,7 +92,7 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
-      - ./zk-multiple-kafka-multiple/kafka3/data:/var/lib/kafka/data
+      - ./kafka-windows-docker-data/kafka3/data:/var/lib/kafka/data
     depends_on:
       - zookeep1
       - zookeep2
